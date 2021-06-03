@@ -12,11 +12,12 @@ export const MovieList = (props: MovieListProps) => {
     const [movies, setMovies] = useState([])
 
     useEffect(() => {
-        const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${props.filters.sort_by}&page=${props.page}`
+        const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${props.filters.sort_by}&page=${props.page}&primary_release_year=${props.filters.primary_release_year}`
         fetch(link)
             .then(response => response.json())
             .then(movies => setMovies(movies.results))
     }, [props.filters, props.page])
+
     return (
         <Box display='flex' justifyContent='space-between' flexWrap="wrap">
             {movies.map((movies: any) => {

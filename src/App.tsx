@@ -13,25 +13,31 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const defaultFilters = {
-    sort_by: 'popularity.desc'
+    sort_by: 'popularity.desc',
+    primary_release_year: '2018',
+    with_genres: []
 }
 
 export const App = () => {
     const [filters, setFilters] = useState(defaultFilters)
     const [page, setPage] = useState(1)
+    const [checked, setChecked] = useState(false);
+    const [genre, setGenre] = useState([])
 
     const changeFilters = (event: any) => {
         const { name, value } = event.target
         setFilters((prev: any) => ({
-            ...prev.filters,
+            ...prev,
             [name]: value
         }))
         setPage(1)
     }
 
-    const changePage = (event: ChangeEvent<unknown>, page: number) => {
-        setPage(page)
-    }
+    const changePage = (event: ChangeEvent<unknown>, page: number) => setPage(page)
+    
+    // const changeGenre = () => {
+
+    // }
 
     return (
         <Container>
