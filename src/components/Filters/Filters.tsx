@@ -8,6 +8,7 @@ import Pagination from '@material-ui/lab/Pagination';
 import Checkbox from '@material-ui/core/Checkbox';
 import { API_URL, API_KEY_3 } from '../../api/api'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { Genre } from '../../types/types'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,15 +23,14 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface FiltersProps {
-    filters: any
+    filters: { sort_by: string, primary_release_year: string, with_genres: any }
     changeFilters: (e: any) => void
     page: number
     changePage: (event: ChangeEvent<unknown>, page: number) => void
 }
 
 export const Filters = (props: FiltersProps) => {
-    const [genre, setGenre] = useState([])
-    console.log(props.filters)
+    const [genre, setGenre] = useState<Genre[]>([])
 
     useEffect(() => {
         const link = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`
@@ -82,7 +82,7 @@ export const Filters = (props: FiltersProps) => {
             <Pagination count={10} page={props.page} onChange={props.changePage} />
 
             <div>
-                {genre.map((g: any) => {
+                {genre.map(g => {
                     return (
                         <FormControlLabel
                             key={g.id}

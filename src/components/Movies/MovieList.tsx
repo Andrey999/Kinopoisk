@@ -2,17 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { API_URL, API_KEY_3 } from '../../api/api'
 import Box from '@material-ui/core/Box';
 import { MovieListItem } from './MovieListItem'
+import queryString from 'query-string'
+import { Movies } from '../../types/types'
 
 interface MovieListProps {
-    filters: any
+    filters: { sort_by: string, primary_release_year: string, with_genres: any }
     page: number
 }
 
 export const MovieList = (props: MovieListProps) => {
-    const [movies, setMovies] = useState([])
+    const { sort_by, primary_release_year, with_genres } = props.filters
+    const [movies, setMovies] = useState<Movies[]>([])
 
     useEffect(() => {
-        const link = `${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${props.filters.sort_by}&page=${props.page}&primary_release_year=${props.filters.primary_release_year}`
+        const queryStringParams = {
+            api_key: API_KEY_3,
+            language: "ru-RU",
+            sort_by,
+            page: props.page,
+            primary_release_year,
+            with_genres
+        }
+        if (with_genres.length > 0) {
+            queryStringParams.with_genres = with_genres.join(',')
+        }
+
+        const link = `${API_URL}/discover/movie?${queryString.stringify(queryStringParams)}`
         fetch(link)
             .then(response => response.json())
             .then(movies => setMovies(movies.results))

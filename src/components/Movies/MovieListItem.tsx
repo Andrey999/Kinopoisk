@@ -5,6 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import { Movies } from '../../types/types'
 
 const useStyles = makeStyles({
     root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 interface MovieListItemProps {
-    movies: any
+    movies: Movies
 }
 
 export const MovieListItem = (props: MovieListItemProps) => {

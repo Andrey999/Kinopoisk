@@ -21,8 +21,6 @@ const defaultFilters = {
 export const App = () => {
     const [filters, setFilters] = useState(defaultFilters)
     const [page, setPage] = useState(1)
-    const [checked, setChecked] = useState(false);
-    const [genre, setGenre] = useState([])
 
     const changeFilters = (event: any) => {
         const { name, value } = event.target
@@ -34,10 +32,6 @@ export const App = () => {
     }
 
     const changePage = (event: ChangeEvent<unknown>, page: number) => setPage(page)
-    
-    // const changeGenre = () => {
-
-    // }
 
     return (
         <Container>
