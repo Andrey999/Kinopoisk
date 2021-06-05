@@ -9,6 +9,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { API_URL, API_KEY_3 } from '../../api/api'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Genre } from '../../types/types'
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -81,7 +82,7 @@ export const Filters = (props: FiltersProps) => {
 
             <Pagination count={10} page={props.page} onChange={props.changePage} />
 
-            <div>
+            <Box display="flex" flexDirection="column">
                 {genre.map(g => {
                     return (
                         <FormControlLabel
@@ -97,7 +98,7 @@ export const Filters = (props: FiltersProps) => {
                         />
                     )
                 })}
-            </div>
+            </Box>
         </FormControl>
     )
 }
