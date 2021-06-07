@@ -8,7 +8,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export const Login = () => {
+interface LoginProps {
+    getUser: (user: any) => void
+    saveSessionId: (sessionId: any) => void
+}
+
+export const Login = (props: LoginProps) => {
     const [open, setOpen] = useState(false)
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
@@ -42,18 +47,20 @@ export const Login = () => {
                 },
                 body: JSON.stringify({ request_token: getValidateWithLogin.request_token })
             })
+            props.saveSessionId(sessionId.session_id)
+
+            // после получения session_id получаем пользователя
+            const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${sessionId.session_id}`)
+            props.getUser(user)
+            setOpen(false)
         } catch (error) {
-            setErrors(({ errors: { base: error.status_message } }))
+            setErrors((prev: any) => ({ ...prev, base: error.status_message }))
         }
     }
 
     const handleClickOpen = () => {
         setOpen(true);
     };
-
-    const handleClose = () => {
-        setOpen(false);
-    }
 
     const validateFields = () => {
         if (userName === '') {
@@ -69,8 +76,8 @@ export const Login = () => {
 
     const onLogin = (event: any) => {
         event.preventDefault()
-        if (Object.keys(errors).length > 0) {
-            validateFields()
+        if (Object.keys(errors).length) {
+            setErrors(validateFields)
         } else {
             onSubmit()
         }
@@ -92,7 +99,6 @@ export const Login = () => {
             <div>
                 <Dialog open={open} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Авторизация</DialogTitle>
-                    <div>{errors.base}</div>
                     <DialogContent>
                         <TextField
                             autoFocus

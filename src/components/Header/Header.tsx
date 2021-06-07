@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Login } from './Login'
+import { User } from './User'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,7 +20,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Header = () => {
+interface HeaderProps {
+    user: any
+    getUser: (user: any) => void
+    saveSessionId: (sessionId: any) => void
+}
+
+export const Header = (props: HeaderProps) => {
     const classes = useStyles();
 
     return (
@@ -29,7 +36,7 @@ export const Header = () => {
                     <Typography variant="h6" className={classes.title}>
                         Home
                     </Typography>
-                    <Login />
+                    {props.user ? <User user={props.user} /> : <Login getUser={props.getUser} saveSessionId={props.saveSessionId} />}
                 </Toolbar>
             </AppBar>
         </div>
