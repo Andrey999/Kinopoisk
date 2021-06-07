@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface HeaderProps {
     user: any
-    getUser: (user: any) => void
     saveSessionId: (sessionId: any) => void
 }
 
@@ -36,7 +35,7 @@ export const Header = (props: HeaderProps) => {
                     <Typography variant="h6" className={classes.title}>
                         Home
                     </Typography>
-                    {props.user ? <User user={props.user} /> : <Login getUser={props.getUser} saveSessionId={props.saveSessionId} />}
+                    {props.user ? <User /> : <Login saveSessionId={props.saveSessionId} />}
                 </Toolbar>
             </AppBar>
         </div>

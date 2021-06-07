@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import { API_URL, API_KEY_3 } from '../../api/api'
 import { fetchApi } from '../../utils/fetchApi'
@@ -7,13 +7,15 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { AppContext } from '../../App'
 
 interface LoginProps {
-    getUser: (user: any) => void
     saveSessionId: (sessionId: any) => void
 }
 
 export const Login = (props: LoginProps) => {
+    const { getUser } = useContext(AppContext)
+
     const [open, setOpen] = useState(false)
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState('')
@@ -51,7 +53,7 @@ export const Login = (props: LoginProps) => {
 
             // после получения session_id получаем пользователя
             const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${sessionId.session_id}`)
-            props.getUser(user)
+            getUser(user)
             setOpen(false)
         } catch (error) {
             setErrors((prev: any) => ({ ...prev, base: error.status_message }))

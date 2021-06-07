@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, createContext } from 'react';
 import { MovieList } from './components/Movies/MovieList'
 import { Filters } from './components/Filters/Filters'
 import Container from '@material-ui/core/Container';
@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {}
     }),
 );
+
+export const AppContext = createContext()
 
 const defaultFilters = {
     sort_by: 'popularity.desc',
@@ -31,7 +33,6 @@ export const App = () => {
 
     useEffect(() => {
         const id = localStorage.getItem('sessionId')
-        // console.log(ls) 
         if (id) {
             fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${id}`)
                 .then(data => getUser(data))
@@ -56,23 +57,25 @@ export const App = () => {
     }
 
     return (
-        <Container>
-            <Header user={user} getUser={getUser} saveSessionId={saveSessionId} />
-            <Grid container spacing={3} >
-                <Grid item xs={3} sm={3}>
-                    <Typography variant="h5">Фильтры: </Typography>
-                    <Filters
-                        filters={filters}
-                        changeFilters={changeFilters}
-                        page={page}
-                        changePage={changePage}
-                    />
-                </Grid>
+        <AppContext.Provider value={{ user, getUser }}>
+            <Container>
+                <Header user={user} saveSessionId={saveSessionId} />
+                <Grid container spacing={3} >
+                    <Grid item xs={3} sm={3}>
+                        <Typography variant="h5">Фильтры: </Typography>
+                        <Filters
+                            filters={filters}
+                            changeFilters={changeFilters}
+                            page={page}
+                            changePage={changePage}
+                        />
+                    </Grid>
 
-                <Grid item xs={9} sm={9}>
-                    <MovieList filters={filters} page={page} />
+                    <Grid item xs={9} sm={9}>
+                        <MovieList filters={filters} page={page} />
+                    </Grid>
                 </Grid>
-            </Grid>
-        </Container>
+            </Container>
+        </AppContext.Provider>
     );
 };
