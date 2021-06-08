@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const User = () => {
     const userContext = useContext(AppContext)
     const classes = useStyles();
-    const [userDropdown, setUserDropdown] = React.useState<null | HTMLElement>(null);
-    console.log(userContext.sessionId)
+    const [userDropdown, setUserDropdown] = React.useState<null | HTMLElement>(null)
 
     const userDropdownOpen = (event: any) => {
         setUserDropdown(event.currentTarget);

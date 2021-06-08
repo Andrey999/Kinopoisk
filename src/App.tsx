@@ -1,15 +1,12 @@
-import React, { useState, useEffect, ChangeEvent, createContext } from 'react';
-import { MovieList } from './components/Movies/MovieList'
-import { Filters } from './components/Filters/Filters'
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import React, { useState, useEffect, createContext } from 'react'
+import Container from '@material-ui/core/Container'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Header } from './components/Header/Header'
 import { fetchApi } from './utils/fetchApi'
 import { API_URL, API_KEY_3 } from './api/api'
 import { MoviesHomePage } from './pages/MoviesHomePage/MoviesHomePage'
 import { MoviePage } from './pages/MoviePage/MoviePage'
+import { BrowserRouter, Route, useParams } from 'react-router-dom'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -20,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const AppContext = createContext()
 
 export const App = () => {
+    
     const [user, setUser] = useState(null)
     const [sessionId, setSessionId] = useState<string | null>(null)
 
@@ -53,11 +51,14 @@ export const App = () => {
     }
 
     return (
-        <AppContext.Provider value={{ user, getUser, onLogOut, sessionId }}>
-            <Container>
-                <Header user={user} saveSessionId={saveSessionId} />
-                <MoviesHomePage />
-            </Container>
-        </AppContext.Provider>
+        <BrowserRouter>
+            <AppContext.Provider value={{ user, getUser, onLogOut, sessionId }}>
+                <Container>
+                    <Header user={user} saveSessionId={saveSessionId} />
+                    <Route exact path="/" component={MoviesHomePage} />
+                    <Route path='/movie/:id' component={MoviePage} />
+                </Container>
+            </AppContext.Provider>
+        </BrowserRouter>
     );
 };

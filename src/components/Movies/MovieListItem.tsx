@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Movies } from '../../types/types'
+import { Link, useParams } from 'react-router-dom'
 
 const useStyles = makeStyles({
     root: {
@@ -26,7 +27,7 @@ interface MovieListItemProps {
 export const MovieListItem = (props: MovieListItemProps) => {
     const classes = useStyles();
     return (
-        <Card className={classes.root}>     
+        <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
@@ -34,9 +35,12 @@ export const MovieListItem = (props: MovieListItemProps) => {
                     title="Contemplative Reptile"
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {props.movies.title}
-                    </Typography>
+
+                    <Link to={`/movie/${props.movies.id}`}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {props.movies.title}
+                        </Typography>
+                    </Link>
 
                     <Typography variant="body2" color="textSecondary" component="p">
                         Рейтинг: {props.movies.vote_average}
