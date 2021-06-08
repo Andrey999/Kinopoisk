@@ -8,6 +8,8 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Header } from './components/Header/Header'
 import { fetchApi } from './utils/fetchApi'
 import { API_URL, API_KEY_3 } from './api/api'
+import { MoviesHomePage } from './pages/MoviesHomePage/MoviesHomePage'
+import { MoviePage } from './pages/MoviePage/MoviePage'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -17,17 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const AppContext = createContext()
 
-const defaultFilters = {
-    sort_by: 'popularity.desc',
-    primary_release_year: '2018',
-    with_genres: []
-}
-
 export const App = () => {
-    const [filters, setFilters] = useState(defaultFilters)
-    const [page, setPage] = useState(1)
     const [user, setUser] = useState(null)
-    const [sessionId, setSessionId] = useState(null)
+    const [sessionId, setSessionId] = useState<string | null>(null)
 
     const getUser = (user: any) => setUser(user)
 
@@ -35,46 +29,34 @@ export const App = () => {
         const id = localStorage.getItem('sessionId')
         if (id) {
             fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${id}`)
-                .then(data => getUser(data))
+                .then(user => {
+                    getUser(user)
+                    setSessionId(id)
+                })
         }
     }, [])
 
-    const changeFilters = (event: any) => {
-        const { name, value } = event.target
-        setFilters((prev: any) => ({
-            ...prev,
-            [name]: value
-        }))
-        setPage(1)
+    const saveSessionId = (sessionId: any) => {
+        if (sessionId) {
+            localStorage.setItem('sessionId', sessionId)
+        }
+        else {
+            localStorage.removeItem('sessionId')
+        }
+        setSessionId(sessionId)
     }
 
-    const changePage = (event: ChangeEvent<unknown>, page: number) => setPage(page)
-
-
-    const saveSessionId = (sessionId: any) => {
-        setSessionId(sessionId)
-        localStorage.setItem('sessionId', sessionId)
+    const onLogOut = () => {
+        localStorage.removeItem('sessionId')
+        setSessionId(null)
+        setUser(null)
     }
 
     return (
-        <AppContext.Provider value={{ user, getUser }}>
+        <AppContext.Provider value={{ user, getUser, onLogOut, sessionId }}>
             <Container>
                 <Header user={user} saveSessionId={saveSessionId} />
-                <Grid container spacing={3} >
-                    <Grid item xs={3} sm={3}>
-                        <Typography variant="h5">Фильтры: </Typography>
-                        <Filters
-                            filters={filters}
-                            changeFilters={changeFilters}
-                            page={page}
-                            changePage={changePage}
-                        />
-                    </Grid>
-
-                    <Grid item xs={9} sm={9}>
-                        <MovieList filters={filters} page={page} />
-                    </Grid>
-                </Grid>
+                <MoviesHomePage />
             </Container>
         </AppContext.Provider>
     );
