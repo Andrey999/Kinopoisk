@@ -7,6 +7,8 @@ import { API_URL, API_KEY_3 } from './api/api'
 import { MoviesHomePage } from './pages/MoviesHomePage/MoviesHomePage'
 import { MoviePage } from './pages/MoviePage/MoviePage'
 import { BrowserRouter, Route, useParams } from 'react-router-dom'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { AuthActions } from './store/actions'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -17,7 +19,15 @@ const useStyles = makeStyles((theme: Theme) =>
 export const AppContext = createContext()
 
 export const App = () => {
-    
+    const getAuth = useSelector((state: any) => ({
+        user: state.user,
+        sessionId: state.sessionId,
+        isAuth: state.isAuth
+    }), shallowEqual)
+
+    console.log(getAuth)
+    const dispatch = useDispatch()
+
     const [user, setUser] = useState(null)
     const [sessionId, setSessionId] = useState<string | null>(null)
 
@@ -45,7 +55,7 @@ export const App = () => {
     }
 
     const onLogOut = () => {
-        localStorage.removeItem('sessionId')
+        dispatch(AuthActions.logOut())
         setSessionId(null)
         setUser(null)
     }
