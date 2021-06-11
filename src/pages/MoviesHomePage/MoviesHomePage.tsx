@@ -1,9 +1,12 @@
-import React, { useState, useEffect, ChangeEvent, createContext } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { MovieList } from '../../components/Movies/MovieList'
 import { Filters } from '../../components/Filters/Filters'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import { MoviesActions } from '../../store/actions/index'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+
 
 const defaultFilters = {
     sort_by: 'popularity.desc',
@@ -13,7 +16,10 @@ const defaultFilters = {
 
 export const MoviesHomePage = () => {
     const [filters, setFilters] = useState(defaultFilters)
-    const [page, setPage] = useState(1)
+    const { page } = useSelector((state: any) => ({
+        page: state.movies.page
+    }), shallowEqual)
+    const dispatch = useDispatch()
 
     const changeFilters = (event: any) => {
         const { name, value } = event.target
@@ -21,10 +27,10 @@ export const MoviesHomePage = () => {
             ...prev,
             [name]: value
         }))
-        setPage(1)
+        dispatch(MoviesActions.setPage(1)) 
     }
 
-    const changePage = (event: ChangeEvent<unknown>, page: number) => setPage(page)
+    const changePage = (event: ChangeEvent<unknown>, page: number) => dispatch(MoviesActions.setPage(page)) 
 
     return (
         <Container>

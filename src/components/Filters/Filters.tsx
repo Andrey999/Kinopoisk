@@ -6,10 +6,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Pagination from '@material-ui/lab/Pagination';
 import Checkbox from '@material-ui/core/Checkbox';
-import { API_URL, API_KEY_3 } from '../../api/api'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Genre } from '../../types/types'
 import Box from '@material-ui/core/Box';
+import { MoviesActions } from '../../store/actions/index'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,21 +31,25 @@ interface FiltersProps {
 }
 
 export const Filters = (props: FiltersProps) => {
-    const [genre, setGenre] = useState<Genre[]>([])
+    const { genre, sort_by, primary_release_year, with_genres, page } = useSelector((state: any) => ({
+        genre: state.movies.genre,
+        sort_by: state.movies.sort_by,
+        primary_release_year: state.movies.primary_release_year,
+        with_genres: state.movies.with_genres,
+        page: state.movies.page
+    }), shallowEqual)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        const link = `${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`
-        fetch(link)
-            .then(response => response.json())
-            .then(g => setGenre(g.genres))
+        dispatch(MoviesActions.genresLoadedThunk())
     }, [])
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.changeFilters({
             target: {
                 name: "with_genres",
-                value: event.target.checked ? [...props.filters.with_genres, event.target.value]
-                    : props.filters.with_genres.filter((genre: any) => genre !== event.target.value)
+                value: event.target.checked ? [...with_genres, event.target.value]
+                    : with_genres.filter((genre: any) => genre !== event.target.value)
             }
         });
     };
@@ -56,7 +60,7 @@ export const Filters = (props: FiltersProps) => {
             <Select
                 name='sort_by'
                 labelId="sort_by"
-                value={props.filters.sort_by}
+                value={sort_by}
                 onChange={props.changeFilters}
                 label="Сортировать по"
             >
@@ -70,7 +74,7 @@ export const Filters = (props: FiltersProps) => {
             <Select
                 name='primary_release_year'
                 labelId="primary_release_year"
-                value={props.filters.primary_release_year}
+                value={primary_release_year}
                 onChange={props.changeFilters}
                 label="Год релиза"
             >
@@ -80,10 +84,10 @@ export const Filters = (props: FiltersProps) => {
                 <MenuItem value='2021'>2021</MenuItem>
             </Select>
 
-            <Pagination count={10} page={props.page} onChange={props.changePage} />
+            <Pagination count={10} page={page} onChange={props.changePage} />
 
             <Box display="flex" flexDirection="column">
-                {genre.map(g => {
+                {genre.map((g: any) => {
                     return (
                         <FormControlLabel
                             key={g.id}

@@ -24,8 +24,6 @@ export const App = () => {
         sessionId: state.sessionId,
         isAuth: state.isAuth
     }), shallowEqual)
-
-    console.log(getAuth)
     const dispatch = useDispatch()
 
     const [user, setUser] = useState(null)
