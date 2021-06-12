@@ -52,7 +52,5 @@ export const moviesReducer = (state = initialState, action: any) => {
             }
 
         default: return state
-
     }
-    return state
 }

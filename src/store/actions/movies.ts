@@ -11,14 +11,6 @@ export default {
         }
     },
 
-    // получение фильмов
-    moviesLoaded(movies: any) {
-        return {
-            type: 'MOVIES_SUCCESS',
-            payload: movies
-        }
-    },
-
     //  получение фильмов
     moviesLoadedThunk() {
         return async (dispatch: any) => {
@@ -26,7 +18,10 @@ export default {
                 const { movies } = store.getState()
                 dispatch(MoviesActions.moviesRequest())
                 const movie = await fetchApi(`${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${movies.sort_by}&page=${movies.page}&primary_release_year=${movies.primary_release_year}&with_genres=${movies.with_genres}`)
-                dispatch(MoviesActions.moviesLoaded(movie.results))
+                dispatch({
+                    type: 'MOVIES_SUCCESS',
+                    payload: movie.results
+                })
             } catch (err) {
                 dispatch(MoviesActions.moviesError(err))
             }

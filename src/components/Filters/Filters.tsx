@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface FiltersProps {
-    filters: { sort_by: string, primary_release_year: string, with_genres: any }
     changeFilters: (e: any) => void
     page: number
     changePage: (event: ChangeEvent<unknown>, page: number) => void

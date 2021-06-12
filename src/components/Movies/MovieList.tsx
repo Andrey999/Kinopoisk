@@ -7,13 +7,7 @@ import { Movies } from '../../types/types'
 import { MoviesActions } from '../../store/actions/index'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
-interface MovieListProps {
-    filters: { sort_by: string, primary_release_year: string, with_genres: any }
-    page: number
-}
-
-
-export const MovieList = (props: MovieListProps) => {
+export const MovieList = () => {
     const { movies, sort_by, primary_release_year, with_genres, page } = useSelector((state: any) => ({
         movies: state.movies.movies,
         sort_by: state.movies.sort_by,
@@ -36,9 +30,8 @@ export const MovieList = (props: MovieListProps) => {
         //     queryStringParams.with_genres = with_genres.join(',')
         // }
         // const link = `${API_URL}/discover/movie?${queryString.stringify(queryStringParams)}`
-        console.log('work')
         dispatch(MoviesActions.moviesLoadedThunk())
-    }, [sort_by, primary_release_year, with_genres])
+    }, [sort_by, primary_release_year, with_genres, page])
 
     return (
         <Box display='flex' justifyContent='space-between' flexWrap="wrap">

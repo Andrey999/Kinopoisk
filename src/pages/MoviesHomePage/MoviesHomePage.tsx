@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import { MovieList } from '../../components/Movies/MovieList'
 import { Filters } from '../../components/Filters/Filters'
 import Container from '@material-ui/core/Container'
@@ -8,14 +8,7 @@ import { MoviesActions } from '../../store/actions/index'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 
-const defaultFilters = {
-    sort_by: 'popularity.desc',
-    primary_release_year: '2018',
-    with_genres: []
-}
-
 export const MoviesHomePage = () => {
-    const [filters, setFilters] = useState(defaultFilters)
     const { page } = useSelector((state: any) => ({
         page: state.movies.page
     }), shallowEqual)
@@ -23,14 +16,11 @@ export const MoviesHomePage = () => {
 
     const changeFilters = (event: any) => {
         const { name, value } = event.target
-        setFilters((prev: any) => ({
-            ...prev,
-            [name]: value
-        }))
-        dispatch(MoviesActions.setPage(1)) 
+        dispatch(MoviesActions.changeFilters(name, value))
+        dispatch(MoviesActions.setPage(1))
     }
 
-    const changePage = (event: ChangeEvent<unknown>, page: number) => dispatch(MoviesActions.setPage(page)) 
+    const changePage = (event: ChangeEvent<unknown>, page: number) => dispatch(MoviesActions.setPage(page))
 
     return (
         <Container>
@@ -38,7 +28,6 @@ export const MoviesHomePage = () => {
                 <Grid item xs={3} sm={3}>
                     <Typography variant="h5">Фильтры: </Typography>
                     <Filters
-                        filters={filters}
                         changeFilters={changeFilters}
                         page={page}
                         changePage={changePage}
@@ -46,7 +35,7 @@ export const MoviesHomePage = () => {
                 </Grid>
 
                 <Grid item xs={9} sm={9}>
-                    <MovieList filters={filters} page={page} />
+                    <MovieList />
                 </Grid>
             </Grid>
         </Container>

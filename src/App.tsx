@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react'
+import React, { Fragment, useState, useEffect, createContext } from 'react'
 import Container from '@material-ui/core/Container'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { Header } from './components/Header/Header'
@@ -61,11 +61,13 @@ export const App = () => {
     return (
         <BrowserRouter>
             <AppContext.Provider value={{ user, getUser, onLogOut, sessionId }}>
-                <Container>
+                <Fragment>
                     <Header user={user} saveSessionId={saveSessionId} />
-                    <Route exact path="/" component={MoviesHomePage} />
-                    <Route path='/movie/:id' component={MoviePage} />
-                </Container>
+                    <Container>
+                        <Route exact path="/" component={MoviesHomePage} />
+                        <Route path='/movie/:id' component={MoviePage} />
+                    </Container>
+                </Fragment>
             </AppContext.Provider>
         </BrowserRouter>
     );
