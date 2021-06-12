@@ -9,9 +9,9 @@ import Container from '@material-ui/core/Container'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-            flexGrow: 1,
-        },
+        // root: {
+        //     flexGrow: 1,
+        // },
         menuButton: {
             marginRight: theme.spacing(2),
         },
@@ -30,7 +30,7 @@ export const Header = (props: HeaderProps) => {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
+        <div>
             <AppBar position="static">
                 <Container>
                     <Toolbar>
