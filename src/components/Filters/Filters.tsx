@@ -1,9 +1,5 @@
 import React, { ChangeEvent, useEffect } from 'react'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Pagination from '@material-ui/lab/Pagination';
 import Box from '@material-ui/core/Box';
 import { MoviesActions } from '../../store/actions/index'
@@ -56,7 +52,25 @@ export const Filters = (props: FiltersProps) => {
 
     return (
         <Box>
-            <FormControl size="small" variant="outlined" >
+            <StyledSelect
+                name='sort_by'
+                labelId="sort_by"
+                value={sort_by}
+                changeFilters={props.changeFilters}
+                label="Сортировать по"
+                menuItem={sortBy}
+            />
+
+            <StyledSelect
+                name='primary_release_year'
+                labelId="primary_release_year"
+                value={primary_release_year}
+                changeFilters={props.changeFilters}
+                label="Год релиза"
+                menuItem={years}
+            />
+
+            {/* <FormControl size="small" variant="outlined" >
                 <InputLabel id="sort_by">Сортировать по</InputLabel>
                 <Select
                     name='sort_by'
@@ -70,16 +84,7 @@ export const Filters = (props: FiltersProps) => {
                     <MenuItem value='vote_average.desc'>Рейтинг по убыванию</MenuItem>
                     <MenuItem value='vote_average.asc'>Рейтинг по возростанию</MenuItem>
                 </Select>
-            </FormControl>
-
-            <StyledSelect
-                name='primary_release_year'
-                labelId="primary_release_year"
-                value={primary_release_year}
-                changeFilters={props.changeFilters}
-                label="Год релиза"
-                menuItem={years}
-            />
+            </FormControl> */}
 
 
             {/* <FormControl size="small" variant="outlined" >

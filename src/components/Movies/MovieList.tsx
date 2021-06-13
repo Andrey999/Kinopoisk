@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { API_URL, API_KEY_3 } from '../../api/api'
 import Box from '@material-ui/core/Box';
 import { MovieListItem } from './MovieListItem'
 import queryString from 'query-string'
-import { Movies } from '../../types/types'
 import { MoviesActions } from '../../store/actions/index'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 

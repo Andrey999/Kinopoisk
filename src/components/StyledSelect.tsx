@@ -39,7 +39,7 @@ export const StyledSelect = (props: StyledSelectProps) => {
                 onChange={props.changeFilters}
                 label={props.label}
             >
-                <MenuItem>{props.value}</MenuItem>
+                {/* <MenuItem>{props.value}</MenuItem>  */}
                 {props.menuItem.map((item: any) => {
                     return <MenuItem key={item.id} value={item.value}>{item.value}</MenuItem>
                 })}
