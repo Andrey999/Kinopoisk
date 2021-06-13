@@ -1,21 +1,9 @@
 import React from 'react'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2),
-        },
-    }),
-);
+import { useStyles } from './style'
 
 interface StyledSelectProps {
     name: string
@@ -39,9 +27,8 @@ export const StyledSelect = (props: StyledSelectProps) => {
                 onChange={props.changeFilters}
                 label={props.label}
             >
-                {/* <MenuItem>{props.value}</MenuItem>  */}
                 {props.menuItem.map((item: any) => {
-                    return <MenuItem key={item.id} value={item.value}>{item.value}</MenuItem>
+                    return <MenuItem key={item.id} value={item.id}>{item.value}</MenuItem>
                 })}
             </Select>
         </FormControl>
