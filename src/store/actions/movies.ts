@@ -1,3 +1,4 @@
+import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE } from '../constants'
 import { MoviesActions } from '.'
 import { API_URL, API_KEY_3 } from '../../api/api'
 import { fetchApi } from '../../utils/fetchApi'
@@ -19,7 +20,7 @@ export default {
                 dispatch(MoviesActions.moviesRequest())
                 const movie = await fetchApi(`${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${movies.sort_by}&page=${movies.page}&primary_release_year=${movies.primary_release_year}&with_genres=${movies.with_genres}`)
                 dispatch({
-                    type: 'MOVIES_SUCCESS',
+                    type: MOVIES_SUCCESS,
                     payload: movie.results
                 })
             } catch (err) {
@@ -33,7 +34,7 @@ export default {
         return async (dispatch: any) => {
             const genres = await fetchApi(`${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`)
             return dispatch({
-                type: 'GENRES_SUCCESS',
+                type: GENRES_SUCCESS,
                 payload: genres.genres
             })
         }
@@ -42,22 +43,23 @@ export default {
     // ошибка
     moviesError(error: any) {
         return {
-            type: 'MOVIES_ERROR',
+            type: MOVIES_ERROR,
             payload: error
         }
     },
 
-    //////////////// Filters
+    // изменение фильтров
     changeFilters(name: any, value: any) {
         return {
-            type: 'CHANGE_FILTERS',
+            type: CHANGE_FILTERS,
             payload: { name, value }
         }
     },
 
+    // изменение страницы
     setPage(page: any) {
         return {
-            type: 'SET_PAGE',
+            type: SET_PAGE,
             payload: page
         }
     }

@@ -16,18 +16,19 @@ interface StyledSelectProps {
 
 export const StyledSelect = (props: StyledSelectProps) => {
     const styles = useStyles()
+    const { name, labelId, value, changeFilters, menuItem, label } = props
 
     return (
         <FormControl size="small" variant="outlined" >
-            <InputLabel id={props.labelId}>{props.label}</InputLabel>
+            <InputLabel id={labelId}>{label}</InputLabel>
             <Select
-                name={props.name}
-                labelId={props.labelId}
-                value={props.value}
-                onChange={props.changeFilters}
-                label={props.label}
+                name={name}
+                labelId={labelId}
+                value={value}
+                onChange={changeFilters}
+                label={label}
             >
-                {props.menuItem.map((item: any) => {
+                {menuItem.map((item: any) => {
                     return <MenuItem key={item.id} value={item.id}>{item.value}</MenuItem>
                 })}
             </Select>
