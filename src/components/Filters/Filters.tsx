@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect } from 'react'
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from '@material-ui/lab/Pagination'
 import Box from '@material-ui/core/Box';
 import { MoviesActions } from '../../store/actions/index'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
@@ -39,7 +39,7 @@ export const Filters = () => {
     };
 
     return (
-        <Box>
+        <Box marginTop="10px">
             <SortBy
                 sort_by={sort_by}
                 primary_release_year={primary_release_year}

@@ -1,3 +1,5 @@
+import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE } from '../constants'
+
 const initialState = {
     load: false,
     movies: [],
@@ -13,31 +15,31 @@ const initialState = {
 
 export const moviesReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case 'MOVIES_REQUEST':
+        case MOVIES_REQUEST:
             return {
                 ...state
             }
 
-        case 'MOVIES_SUCCESS':
+        case MOVIES_SUCCESS:
             return {
                 ...state,
                 movies: action.payload
             }
 
-        case 'GENRES_SUCCESS':
+        case GENRES_SUCCESS:
             return {
                 ...state,
                 genre: action.payload
             }
 
-        case 'MOVIES_ERROR':
+        case MOVIES_ERROR:
             return {
                 ...state,
                 movies: [],
                 error: action.payload
             }
 
-        case 'CHANGE_FILTERS':
+        case CHANGE_FILTERS:
             const name = action.payload.name
             const value = action.payload.value
             return {
@@ -45,7 +47,7 @@ export const moviesReducer = (state = initialState, action: any) => {
                 [name]: value
             }
 
-        case 'SET_PAGE':
+        case SET_PAGE:
             return {
                 ...state,
                 page: action.payload

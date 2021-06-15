@@ -8,7 +8,7 @@ export default {
     // запрос на получение фильмов
     moviesRequest() {
         return {
-            type: 'MOVIES_REQUEST'
+            type: MOVIES_REQUEST
         }
     },
 

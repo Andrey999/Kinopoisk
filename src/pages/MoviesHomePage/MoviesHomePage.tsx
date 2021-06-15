@@ -6,14 +6,14 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 export const MoviesHomePage = () => (
-    <Container>
-        <Grid container spacing={3}>
-            <Grid item xs={3} sm={3}>
+    <Container style={{ marginTop: '90px' }}>
+        <Grid container spacing={2}>
+            <Grid item xs={2} sm={2}>
                 <Typography variant="h5">Фильтры: </Typography>
                 <Filters />
             </Grid>
 
-            <Grid item xs={9} sm={9}>
+            <Grid item xs={10} sm={10}>
                 <MovieList />
             </Grid>
         </Grid>
