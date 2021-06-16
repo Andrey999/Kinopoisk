@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { useState, ChangeEvent, useEffect } from 'react'
 import Pagination from '@material-ui/lab/Pagination'
-import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
 import { MoviesActions } from '../../store/actions/index'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { Genres } from './Genres'
@@ -15,6 +16,9 @@ export const Filters = () => {
         page: state.movies.page
     }), shallowEqual)
     const dispatch = useDispatch()
+
+    const [moreGenres, setMoreGenres] = useState(5)
+    const [expandGenres, setExpandGenres] = useState(false)
 
     useEffect(() => {
         dispatch(MoviesActions.genresLoadedThunk())
@@ -38,6 +42,11 @@ export const Filters = () => {
         });
     };
 
+    const showMoreGenres = () => {
+        setExpandGenres(!expandGenres)
+        moreGenres === 5 ? setMoreGenres(genre.length) : setMoreGenres(5)
+    }
+
     return (
         <Box marginTop="10px">
             <SortBy
@@ -45,15 +54,26 @@ export const Filters = () => {
                 primary_release_year={primary_release_year}
                 changeFilters={changeFilters}
             />
-            <Pagination count={10} page={page} onChange={changePage} />
 
             <Box display="flex" flexDirection="column">
-                {genre.map((genre: any) =>
+                {genre.slice(0, moreGenres).map((genre: any) =>
                     <Genres key={genre.id}
                         genre={genre}
                         handleChange={handleChange}
                     />)}
+
+                <Box display="flex" justifyContent="center" margin="10px 0 20px">
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        color="primary"
+                        onClick={showMoreGenres}
+                        children={expandGenres ? 'Меньше жанров' : 'Больше жанров'}
+                    />
+                </Box>
             </Box>
+
+            <Pagination count={10} page={page} onChange={changePage} size="small" />
         </Box>
     )
 }

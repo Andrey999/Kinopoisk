@@ -63,7 +63,7 @@ export const App = () => {
             <AppContext.Provider value={{ user, getUser, onLogOut, sessionId }}>
                 <Fragment>
                     <Header user={user} saveSessionId={saveSessionId} />
-                    <Container>
+                    <Container style={{ marginTop: '90px' }}>
                         <Route exact path="/" component={MoviesHomePage} />
                         <Route path='/movie/:id' component={MoviePage} />
                     </Container>
