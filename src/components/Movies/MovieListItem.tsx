@@ -1,48 +1,38 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Typography from '@material-ui/core/Typography'
 import { Movies } from '../../types/types'
 import { Link, useParams } from 'react-router-dom'
-
-const useStyles = makeStyles({
-    root: {
-        width: '350px',
-        maxWidth: 350,
-        marginBottom: '10px',
-        minHeight: '200px'
-    },
-    media: {
-        height: 140,
-    },
-});
+import { useStyles } from './style'
 
 interface MovieListItemProps {
     movies: Movies
 }
 
 export const MovieListItem = (props: MovieListItemProps) => {
-    const classes = useStyles();
+    const classes = useStyles()
+
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
+                    component="img"
                     className={classes.media}
-                    image={`https://image.tmdb.org/t/p/w500${props.movies.backdrop_path || props.movies.poster_path}`}
-                    title="Contemplative Reptile"
+                    src={`https://image.tmdb.org/t/p/w500${props.movies.backdrop_path || props.movies.poster_path}`}
+                    title={props.movies.title}
                 />
+
                 <CardContent>
-
-                    <Link to={`/movie/${props.movies.id}`}>
-                        <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom color="primary">
+                        <Link to={`/movie/${props.movies.id}`} className={classes.link}>
                             {props.movies.title}
-                        </Typography>
-                    </Link>
+                        </Link>
+                    </Typography>
 
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography variant="body2" color="textSecondary">
                         Рейтинг: {props.movies.vote_average}
                     </Typography>
                 </CardContent>

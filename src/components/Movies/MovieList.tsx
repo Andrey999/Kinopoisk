@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { API_URL, API_KEY_3 } from '../../api/api'
+import React, { useEffect } from 'react'
 import Box from '@material-ui/core/Box';
 import { MovieListItem } from './MovieListItem'
 import queryString from 'query-string'
