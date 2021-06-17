@@ -21,7 +21,9 @@ export const MovieListItem = (props: MovieListItemProps) => {
                 <CardMedia
                     component="img"
                     className={classes.media}
-                    src={`https://image.tmdb.org/t/p/w500${props.movies.backdrop_path || props.movies.poster_path}`}
+                    src={props.movies.backdrop_path != null ?
+                        `https://image.tmdb.org/t/p/w500${props.movies.backdrop_path || props.movies.poster_path}`
+                        : `https://insidetrade.co/wp-content/media/2019/04/no-logo.png`}
                     title={props.movies.title}
                 />
 
