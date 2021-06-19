@@ -4,7 +4,8 @@ export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         headerToolbar: {
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            minHeight: '50px',
         },
         headerLink: {
             color: theme.palette.background.paper,

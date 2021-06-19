@@ -1,5 +1,4 @@
 export const fetchApi = async (url: string, options?: {}) => {
-    // return new Promise((resolve, reject) => {
     try {
         const response = await fetch(url, options)
         if (response.status < 400) {
@@ -10,8 +9,7 @@ export const fetchApi = async (url: string, options?: {}) => {
             throw response
         }
     } catch (error) {
-        const err = await error.json()
-        return err
+        return await error.json()
     }
     //     fetch(url, options)
     //         .then(response => {

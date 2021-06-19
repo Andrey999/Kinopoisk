@@ -10,10 +10,9 @@ import { useStyles } from './style'
 
 interface HeaderProps {
     user: any
-    saveSessionId: (sessionId: any) => void
 }
 
-export const Header = ({ user, saveSessionId }: HeaderProps) => {
+export const Header = ({ user }: HeaderProps) => {
     const classes = useStyles();
 
     return (
@@ -26,7 +25,7 @@ export const Header = ({ user, saveSessionId }: HeaderProps) => {
                         </Link>
                     </Typography>
 
-                    {user ? <User /> : <Login saveSessionId={saveSessionId} />}
+                    {user ? <User /> : <Login />}
                 </Toolbar>
             </Container>
         </AppBar>

@@ -1,11 +1,12 @@
-import React, { useContext, useEffect } from 'react'
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import { AppContext } from '../../App'
-import { fetchApi } from '../../utils/fetchApi';
+import React from 'react'
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+import Avatar from '@material-ui/core/Avatar'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import { fetchApi } from '../../utils/fetchApi'
 import { API_URL, API_KEY_3 } from '../../api/api'
+import { AuthActions } from '../../store/actions/index'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -16,12 +17,17 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
     }),
-);
+)
 
-export const User = () => {
-    const userContext = useContext(AppContext)
+export const User = () => { 
     const classes = useStyles();
     const [userDropdown, setUserDropdown] = React.useState<null | HTMLElement>(null)
+
+    const { user, sessionId } = useSelector((state: any) => ({
+        user: state.auth.user,
+        sessionId: state.auth.sessionId
+    }), shallowEqual)
+    const dispatch = useDispatch()
 
     const userDropdownOpen = (event: any) => {
         setUserDropdown(event.currentTarget);
@@ -38,9 +44,9 @@ export const User = () => {
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({ session_id: userContext.sessionId })
+            body: JSON.stringify({ session_id: sessionId })
         }).then(() => {
-            userContext.onLogOut()
+            dispatch(AuthActions.logOut())
         })
         setUserDropdown(null)
     }
@@ -49,8 +55,8 @@ export const User = () => {
         <div className={classes.root}>
             {/* <div > */}
             <Avatar
-                alt={`${userContext.user.username}`}
-                src={`https://secure.gravatar.com/avatar/${userContext.user.avatar.gravatar.hash}`}
+                alt={`${user.username}`}
+                src={`https://secure.gravatar.com/avatar/${user.avatar.gravatar.hash}`}
                 onClick={userDropdownOpen}
             />
             {/* </div> */}
