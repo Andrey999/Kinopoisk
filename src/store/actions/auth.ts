@@ -51,8 +51,9 @@ export default {
         const id = localStorage.getItem('sessionId')
         console.log(id)
         return async (dispatch: any) => {
+            console.log(id)
             if (id) {
-                const user = await fetch(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${id}`)
+                const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${id}`)
                 return dispatch({
                     type: 'SET_USER',
                     payload: user

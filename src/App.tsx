@@ -16,8 +16,10 @@ export const App = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        // const id = localStorage.getItem('sessionId')
+        // console.log(id)
         dispatch(AuthActions.setUserThunk())
-    }, [user])
+    }, [])
 
     const onLogOut = () => {
         dispatch(AuthActions.logOut())
