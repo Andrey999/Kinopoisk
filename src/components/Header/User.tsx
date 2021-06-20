@@ -1,5 +1,4 @@
 import React from 'react'
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -7,19 +6,9 @@ import { fetchApi } from '../../utils/fetchApi'
 import { API_URL, API_KEY_3 } from '../../api/api'
 import { AuthActions } from '../../store/actions/index'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { useStyles } from './style'
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            display: 'flex',
-            '& > *': {
-                margin: theme.spacing(1),
-            },
-        },
-    }),
-)
-
-export const User = () => { 
+export const User = () => {
     const classes = useStyles();
     const [userDropdown, setUserDropdown] = React.useState<null | HTMLElement>(null)
 
@@ -38,28 +27,17 @@ export const User = () => {
     };
 
     const clearSession = () => {
-        fetchApi(`${API_URL}/authentication/session?api_key=${API_KEY_3}`, {
-            method: "DELETE",
-            mode: 'cors',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({ session_id: sessionId })
-        }).then(() => {
-            dispatch(AuthActions.logOut())
-        })
+        dispatch(AuthActions.logOut())
         setUserDropdown(null)
     }
 
     return (
-        <div className={classes.root}>
-            {/* <div > */}
+        <div className={classes.headerUser}>
             <Avatar
                 alt={`${user.username}`}
-                src={`https://secure.gravatar.com/avatar/${user.avatar.gravatar.hash}`}
+                src={`https://secure.gravatar.com/avatar/${user.avatar.gravatar.hash} || null`}
                 onClick={userDropdownOpen}
             />
-            {/* </div> */}
 
             <div>
                 <Menu

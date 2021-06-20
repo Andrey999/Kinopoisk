@@ -11,5 +11,11 @@ export const useStyles = makeStyles((theme: Theme) =>
             color: theme.palette.background.paper,
             textDecoration: 'none'
         },
+        headerUser: {
+            display: 'flex',
+            '& > *': {
+                margin: theme.spacing(1),
+            },
+        }
     })
 );

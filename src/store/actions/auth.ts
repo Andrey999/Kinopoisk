@@ -1,75 +1,25 @@
-import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE } from '../constants'
+import { USERNAME, PASSWORD, GET_USER, SAVE_SESSION_ID, SET_USER, LOG_OUT, ERROR } from '../constants'
 import { API_URL, API_KEY_3 } from '../../api/api'
 import { fetchApi } from '../../utils/fetchApi'
 import { store } from '../store'
 import { AuthActions } from './index'
 
-
 export default {
-
-    getAuth(payload: any) {
-        return {
-            type: 'AUTH',
-            payload
-        }
-    },
-
-    logOut() {
-        return {
-            type: 'LOG_OUT'
-        }
-    },
-
     setUserName(name: string) {
         return {
-            type: 'USERNAME',
+            type: USERNAME,
             payload: name
         }
     },
 
     setPassword(pasword: string) {
         return {
-            type: 'PASSWORD',
+            type: PASSWORD,
             payload: pasword
         }
     },
 
-    saveSessionId(sessionId: any) {
-        if (sessionId) {
-            localStorage.setItem('sessionId', sessionId)
-        }
-        else {
-            localStorage.removeItem('sessionId')
-        }
-        return {
-            type: 'SAVE_SESSION_ID',
-            payload: sessionId
-        }
-    },
-
-    setUserThunk() {
-        const id = localStorage.getItem('sessionId')
-        console.log(id)
-        return async (dispatch: any) => {
-            console.log(id)
-            if (id) {
-                const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${id}`)
-                return dispatch({
-                    type: 'SET_USER',
-                    payload: user
-                })
-            }
-        }
-    },
-
-    setError(err: string | null) {
-        return {
-            type: 'ERROR',
-            payload: err
-        }
-    },
-
-    // получение жанров
+    // получение сессии
     authLoadedThunk() {
         return async (dispatch: any) => {
             try {
@@ -110,13 +60,65 @@ export default {
                 // после получения session_id получаем пользователя
                 const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${sessionId.session_id}`)
                 dispatch({
-                    type: 'GET_USER',
+                    type: GET_USER,
                     payload: user
                 })
-                // setOpen(false)
             } catch (err) {
                 console.log(err)
             }
+        }
+    },
+
+    saveSessionId(sessionId: any) {
+        if (sessionId) {
+            localStorage.setItem('sessionId', sessionId)
+        }
+        else {
+            localStorage.removeItem('sessionId')
+        }
+        return {
+            type: SAVE_SESSION_ID,
+            payload: sessionId
+        }
+    },
+
+    userUpdateThunk() {
+        const id = localStorage.getItem('sessionId')
+
+        return async (dispatch: any) => {
+            if (id) {
+                const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${id}`)
+                return dispatch({
+                    type: SET_USER,
+                    payload: user
+                })
+            }
+        }
+    },
+
+    logOut() {
+        return async (dispatch: any) => {
+            const { auth } = store.getState()
+            localStorage.removeItem('sessionId')
+
+            await fetchApi(`${API_URL}/authentication/session?api_key=${API_KEY_3}`, {
+                method: "DELETE",
+                mode: 'cors',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({ session_id: auth.sessionId })
+            })
+            return dispatch({
+                type: LOG_OUT
+            })
+        }
+    },
+
+    setError(err: string | null) {
+        return {
+            type: ERROR,
+            payload: err
         }
     },
 }

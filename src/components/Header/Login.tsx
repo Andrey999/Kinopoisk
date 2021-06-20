@@ -17,7 +17,7 @@ export const Login = () => {
     const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false)
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState<{ userName: string, password: string } | {}>({})
 
     const onSubmit = () => {
         dispatch(AuthActions.authLoadedThunk())

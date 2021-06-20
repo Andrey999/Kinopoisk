@@ -1,3 +1,5 @@
+import { USERNAME, PASSWORD, GET_USER, SAVE_SESSION_ID, SET_USER, LOG_OUT, ERROR } from '../constants'
+
 const initialState = {
     // login
     requestToken: null,
@@ -14,24 +16,38 @@ const initialState = {
 export const authReducer = (state = initialState, action: any) => {
     switch (action.type) {
 
-        case 'GET_TOKEN':
+        case USERNAME:
             return {
                 ...state,
-                requestToken: action.payload
+                username: action.payload
             }
 
-        case 'AUTH':
-            localStorage.setItem('sessionId', action.payload.id)
-
+        case PASSWORD:
             return {
                 ...state,
-                user: action.payload.user,
-                sessionId: action.payload.id,
+                password: action.payload
+            }
+
+        case SAVE_SESSION_ID:
+            return {
+                ...state,
+                sessionId: action.payload,
                 isAuth: true
             }
-        case 'LOG_OUT':
-            localStorage.removeItem('sessionId')
 
+        case GET_USER:
+            return {
+                ...state,
+                user: action.payload
+            }
+
+        case SET_USER:
+            return {
+                ...state,
+                user: action.payload
+            }
+
+        case LOG_OUT:
             return {
                 ...state,
                 user: null,
@@ -39,41 +55,10 @@ export const authReducer = (state = initialState, action: any) => {
                 isAuth: false
             }
 
-        case 'USERNAME':
-            return {
-                ...state,
-                username: action.payload
-            }
-
-        case 'PASSWORD':
-            return {
-                ...state,
-                password: action.payload
-            }
-
-        case 'ERROR':
+        case ERROR:
             return {
                 ...state,
                 error: action.payload
-            }
-
-        case 'SAVE_SESSION_ID':
-            return {
-                ...state,
-                sessionId: action.payload,
-                isAuth: true
-            }
-
-        case 'GET_USER':
-            return {
-                ...state,
-                user: action.payload
-            }
-
-        case 'SET_USER':
-            return {
-                ...state,
-                user: action.payload
             }
 
         default: return state

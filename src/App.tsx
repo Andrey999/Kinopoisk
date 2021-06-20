@@ -16,18 +16,11 @@ export const App = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // const id = localStorage.getItem('sessionId')
-        // console.log(id)
-        dispatch(AuthActions.setUserThunk())
+        dispatch(AuthActions.userUpdateThunk())
     }, [])
-
-    const onLogOut = () => {
-        dispatch(AuthActions.logOut())
-    }
 
     return (
         <BrowserRouter>
-            {/* <AppContext.Provider value={{ user, getUser, onLogOut }}> */}
             <Fragment>
                 <Header user={user} />
                 <Container style={{ marginTop: '75px' }}>
@@ -35,7 +28,6 @@ export const App = () => {
                     <Route path='/movie/:id' component={MoviePage} />
                 </Container>
             </Fragment>
-            {/* </AppContext.Provider> */}
         </BrowserRouter>
     );
 };
