@@ -17,7 +17,7 @@ export const Login = () => {
     const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false)
-    const [errors, setErrors] = useState<{ userName: string, password: string } | {}>({})
+    const [errors, setErrors] = useState<{ userName?: string, password?: string }>({})
 
     const onSubmit = () => {
         dispatch(AuthActions.authLoadedThunk())
@@ -33,7 +33,7 @@ export const Login = () => {
         if (username === '') {
             return setErrors(({ userName: 'field must be filled' }))
         }
-        if (password == '') {
+        if (password === '') {
             return setErrors(({ password: 'field must be filled' }))
         }
         else {
@@ -44,7 +44,7 @@ export const Login = () => {
     const changeUsername = (event: any) => {
         dispatch(AuthActions.setUserName(event.target.value))
         dispatch(AuthActions.setError(null))
-        setErrors((prev: any) => ({ ...prev, username: null }))
+        setErrors((prev: any) => ({ ...prev, userName: null }))
     }
 
     const changePassword = (event: any) => {

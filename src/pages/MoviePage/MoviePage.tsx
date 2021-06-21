@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { fetchApi } from '../../utils/fetchApi'
-import { API_URL, API_KEY_3 } from '../../api/api'
+import { API_URL, API_KEY_3 } from '../../api/fetchApi'
 import { Link, useParams } from 'react-router-dom'
 
 export const MoviePage = () => {

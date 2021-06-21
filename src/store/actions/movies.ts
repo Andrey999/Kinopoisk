@@ -1,7 +1,7 @@
 import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE } from '../constants'
 import { MoviesActions } from './index'
-import { API_URL, API_KEY_3 } from '../../api/api'
-import { fetchApi } from '../../utils/fetchApi'
+import { API_URL, API_KEY_3 } from '../../api/fetchApi'
+import { fetchApi } from '../../api/fetchApi'
 import { store } from '../store'
 
 export default {

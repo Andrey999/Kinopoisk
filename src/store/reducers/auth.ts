@@ -2,7 +2,6 @@ import { USERNAME, PASSWORD, GET_USER, SAVE_SESSION_ID, SET_USER, LOG_OUT, ERROR
 
 const initialState = {
     // login
-    requestToken: null,
     username: '',
     password: '',
     error: null,

@@ -1,6 +1,6 @@
 import { USERNAME, PASSWORD, GET_USER, SAVE_SESSION_ID, SET_USER, LOG_OUT, ERROR } from '../constants'
-import { API_URL, API_KEY_3 } from '../../api/api'
-import { fetchApi } from '../../utils/fetchApi'
+import { API_URL, API_KEY_3 } from '../../api/fetchApi'
+import { fetchApi } from '../../api/fetchApi'
 import { store } from '../store'
 import { AuthActions } from './index'
 
@@ -59,10 +59,13 @@ export default {
 
                 // после получения session_id получаем пользователя
                 const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${sessionId.session_id}`)
-                dispatch({
-                    type: GET_USER,
-                    payload: user
-                })
+                if (sessionId.session_id) {
+                    dispatch({
+                        type: GET_USER,
+                        payload: user
+                    })
+                }
+
             } catch (err) {
                 console.log(err)
             }
