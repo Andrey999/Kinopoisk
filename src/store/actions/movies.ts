@@ -1,7 +1,6 @@
 import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE } from '../constants'
 import { MoviesActions } from './index'
-import { API_URL, API_KEY_3 } from '../../api/fetchApi'
-import { fetchApi } from '../../api/fetchApi'
+import { CallApi } from '../../api/fetchApi'
 import { store } from '../store'
 
 export default {
@@ -18,7 +17,15 @@ export default {
             try {
                 const { movies } = store.getState()
                 dispatch(MoviesActions.moviesRequest())
-                const movie = await fetchApi(`${API_URL}/discover/movie?api_key=${API_KEY_3}&language=ru-RU&sort_by=${movies.sort_by}&page=${movies.page}&primary_release_year=${movies.primary_release_year}&with_genres=${movies.with_genres}`)
+                const movie = await CallApi.get(`/discover/movie`, {
+                    params: {
+                        language: "ru-RU",
+                        sort_by: movies.sort_by,
+                        page: movies.page,
+                        primary_release_year: movies.primary_release_year,
+                        with_genres: movies.with_genres
+                    }
+                })
                 dispatch({
                     type: MOVIES_SUCCESS,
                     payload: movie.results
@@ -32,7 +39,11 @@ export default {
     // получение жанров
     genresLoadedThunk() {
         return async (dispatch: any) => {
-            const genres = await fetchApi(`${API_URL}/genre/movie/list?api_key=${API_KEY_3}&language=ru-RU`)
+            const genres = await CallApi.get(`/genre/movie/list`, {
+                params: {
+                    language: "ru-RU",
+                }
+            })
             return dispatch({
                 type: GENRES_SUCCESS,
                 payload: genres.genres

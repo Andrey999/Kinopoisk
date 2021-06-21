@@ -1,6 +1,5 @@
 import { USERNAME, PASSWORD, GET_USER, SAVE_SESSION_ID, SET_USER, LOG_OUT, ERROR } from '../constants'
-import { API_URL, API_KEY_3 } from '../../api/fetchApi'
-import { fetchApi } from '../../api/fetchApi'
+import { CallApi } from '../../api/fetchApi'
 import { store } from '../store'
 import { AuthActions } from './index'
 
@@ -26,15 +25,10 @@ export default {
                 const { auth } = store.getState()
 
                 // получение request token
-                const getToken = await fetchApi(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
+                const getToken = await CallApi.get(`/authentication/token/new`, {})
 
                 // проверяем на правильность username и password и присваиваем request token
-                const getValidateWithLogin = await fetchApi(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`, {
-                    method: "POST",
-                    mode: 'cors',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
+                const getValidateWithLogin = await CallApi.post(`/authentication/token/validate_with_login`, {
                     body: JSON.stringify({
                         username: auth.username,
                         password: auth.password,
@@ -46,19 +40,18 @@ export default {
                 else dispatch(AuthActions.setError(getValidateWithLogin.status_message))
 
                 // если username и password существуют присваиваем session_id
-                const sessionId = await fetchApi(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`, {
-                    method: "POST",
-                    mode: 'cors',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
+                const sessionId = await CallApi.post(`/authentication/session/new`, {
                     body: JSON.stringify({ request_token: getValidateWithLogin.request_token })
                 })
 
                 if (getValidateWithLogin.success) dispatch(AuthActions.saveSessionId(sessionId.session_id))
 
                 // после получения session_id получаем пользователя
-                const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${sessionId.session_id}`)
+                const user = await CallApi.get(`/account`, {
+                    params: {
+                        session_id: sessionId.session_id
+                    }
+                })
                 if (sessionId.session_id) {
                     dispatch({
                         type: GET_USER,
@@ -90,7 +83,11 @@ export default {
 
         return async (dispatch: any) => {
             if (id) {
-                const user = await fetchApi(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${id}`)
+                const user = await CallApi.get(`/account`, {
+                    params: {
+                        session_id: id
+                    }
+                })
                 return dispatch({
                     type: SET_USER,
                     payload: user
@@ -104,12 +101,7 @@ export default {
             const { auth } = store.getState()
             localStorage.removeItem('sessionId')
 
-            await fetchApi(`${API_URL}/authentication/session?api_key=${API_KEY_3}`, {
-                method: "DELETE",
-                mode: 'cors',
-                headers: {
-                    'content-type': 'application/json'
-                },
+            await CallApi.delete(`/authentication/session`, {
                 body: JSON.stringify({ session_id: auth.sessionId })
             })
             return dispatch({

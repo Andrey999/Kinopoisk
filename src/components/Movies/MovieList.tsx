@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
-import Box from '@material-ui/core/Box';
+import Box from '@material-ui/core/Box'
 import { MovieListItem } from './MovieListItem'
-import queryString from 'query-string'
 import { MoviesActions } from '../../store/actions/index'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 
@@ -16,18 +15,6 @@ export const MovieList = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // const queryStringParams = {
-        //     api_key: API_KEY_3,
-        //     language: "ru-RU",
-        //     sort_by,
-        //     page: props.page,
-        //     primary_release_year,
-        //     with_genres
-        // }
-        // if (with_genres.length > 0) {
-        //     queryStringParams.with_genres = with_genres.join(',')
-        // }
-        // const link = `${API_URL}/discover/movie?${queryString.stringify(queryStringParams)}`
         dispatch(MoviesActions.moviesLoadedThunk())
     }, [sort_by, primary_release_year, with_genres, page])
 
