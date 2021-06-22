@@ -27,6 +27,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             width: '280px'
         },
         singleMovieContent: {
+            position: 'relative',
             marginLeft: '10px',
             display: 'flex',
             flexDirection: 'column',
@@ -34,6 +35,11 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         singleMovieTitle: {
             margin: '0 auto',
+        },
+        btnBack: {
+            position: 'absolute',
+            top: '0',
+            left: '-11px'
         }
     })
 )

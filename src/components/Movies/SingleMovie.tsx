@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import { MoviesActions } from '../../store/actions'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import Card from '@material-ui/core/Card'
@@ -9,17 +10,12 @@ import Box from '@material-ui/core/Box'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import Button from '@material-ui/core/Button'
 import { useStyles } from './style'
 
 interface SingleMovieProps {
     params: any
 }
-
-{/* <Typography gutterBottom color="primary">
-                            <Link to={`/movie/${props.movies.id}`} className={classes.link}>
-                                {singleMovie.title}
-                            </Link>
-                        </Typography> */}
 
 export const SingleMovie = ({ params }: SingleMovieProps) => {
     const classes = useStyles()
@@ -27,10 +23,16 @@ export const SingleMovie = ({ params }: SingleMovieProps) => {
         singleMovie: state.movies.singleMovie
     }), shallowEqual)
     const dispatch = useDispatch()
+    const history = useHistory()
 
     useEffect(() => {
         dispatch(MoviesActions.getSingleMovie(params.id))
     }, [])
+
+    const goBack = () => {
+        history.push('/')
+        dispatch(MoviesActions.clearSingleMovie())
+    }
 
     return (
         <Fragment>
@@ -45,6 +47,16 @@ export const SingleMovie = ({ params }: SingleMovieProps) => {
                 />
 
                 <CardContent className={classes.singleMovieContent}>
+                    <Button
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        className={classes.btnBack}
+                        onClick={goBack}
+                    >
+                        Назад
+                    </Button>
+
                     <Typography variant="h6" color="textPrimary" className={classes.singleMovieTitle}>
                         {singleMovie.title}
                     </Typography>
@@ -52,9 +64,7 @@ export const SingleMovie = ({ params }: SingleMovieProps) => {
                     <List component="ul">
                         <ListItem>
                             <ListItemText primary="Дата релиза:" />
-                            {/* <ListItemText secondary={singleMovie.release_date} /> */}
-                            <ListItemText secondary={<Typography variant="body2" color="textPrimary">{singleMovie.release_date}</Typography>} />
-                            {/* <Typography variant="h6" color="textPrimary"></Typography> */}
+                            <ListItemText secondary={singleMovie.release_date} />
                         </ListItem>
 
                         <ListItem>

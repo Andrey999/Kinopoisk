@@ -1,4 +1,4 @@
-import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE, SINGLE_MOVIE } from '../constants'
+import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE, SINGLE_MOVIE, CLEAR_SINGLE_MOVIE } from '../constants'
 
 const initialState = {
     load: false,
@@ -58,6 +58,12 @@ export const moviesReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 singleMovie: action.payload
+            }
+
+        case CLEAR_SINGLE_MOVIE:
+            return {
+                ...state,
+                singleMovie: []
             }
 
         default: return state

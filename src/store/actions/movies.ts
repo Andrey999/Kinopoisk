@@ -1,4 +1,4 @@
-import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE, SINGLE_MOVIE } from '../constants'
+import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE, SINGLE_MOVIE, CLEAR_SINGLE_MOVIE } from '../constants'
 import { MoviesActions } from './index'
 import { CallApi } from '../../api/CallApi'
 import { store } from '../store'
@@ -88,6 +88,11 @@ export default {
             type: SET_PAGE,
             payload: page
         }
-    }
+    },
 
+    clearSingleMovie() {
+        return {
+            type: CLEAR_SINGLE_MOVIE
+        }
+    }
 }
