@@ -14,6 +14,26 @@ export const useStyles = makeStyles((theme: Theme) =>
         link: {
             textDecoration: 'none',
             color: theme.palette.primary.dark
+        },
+
+        // singleMovie
+        singleMovieContainer: {
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+        },
+        singleMovieImage: {
+            width: '280px'
+        },
+        singleMovieContent: {
+            marginLeft: '10px',
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+        },
+        singleMovieTitle: {
+            margin: '0 auto',
         }
     })
 )

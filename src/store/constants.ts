@@ -5,6 +5,7 @@ export const MOVIES_ERROR = 'MOVIES_ERROR'
 export const GENRES_SUCCESS = 'GENRES_SUCCESS'
 export const CHANGE_FILTERS = 'CHANGE_FILTERS'
 export const SET_PAGE = 'SET_PAGE'
+export const SINGLE_MOVIE = 'SINGLE_MOVIE'
 
 //Login 
 export const USERNAME = 'USERNAME'

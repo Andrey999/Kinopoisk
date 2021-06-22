@@ -1,20 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { fetchApi } from '../../utils/fetchApi'
-import { API_URL, API_KEY_3 } from '../../api/fetchApi'
+import React from 'react'
 import { Link, useParams } from 'react-router-dom'
+import Container from '@material-ui/core/Container'
+import { MoviesActions } from '../../store/actions'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { SingleMovie } from '../../components/Movies/SingleMovie'
 
 export const MoviePage = () => {
-    let params = useParams();
-    const movie = 
-    console.log(params)
-
-    // useEffect(() => {
-        // fetchApi(`${API_URL}/movie/${params.id}?api_key=${API_KEY_3}&&language=ru-RU`)
-    // }, [])
-
+    let params = useParams()
     return (
-        <div>
-            Movie
-        </div>
+        <Container>
+                <SingleMovie params={params} />
+        </Container>
     )
 };

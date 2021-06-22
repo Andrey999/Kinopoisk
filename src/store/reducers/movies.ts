@@ -1,10 +1,11 @@
-import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE } from '../constants'
+import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE, SINGLE_MOVIE } from '../constants'
 
 const initialState = {
     load: false,
     movies: [],
     error: null,
     genre: [],
+    singleMovie: [],
 
     // filters
     sort_by: 'popularity.desc',
@@ -51,6 +52,12 @@ export const moviesReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 page: action.payload
+            }
+
+        case SINGLE_MOVIE:
+            return {
+                ...state,
+                singleMovie: action.payload
             }
 
         default: return state

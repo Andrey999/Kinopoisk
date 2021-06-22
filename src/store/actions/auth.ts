@@ -1,5 +1,5 @@
 import { USERNAME, PASSWORD, GET_USER, SAVE_SESSION_ID, SET_USER, LOG_OUT, ERROR } from '../constants'
-import { CallApi } from '../../api/fetchApi'
+import { CallApi } from '../../api/CallApi'
 import { store } from '../store'
 import { AuthActions } from './index'
 

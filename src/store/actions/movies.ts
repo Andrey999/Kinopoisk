@@ -1,6 +1,6 @@
-import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE } from '../constants'
+import { MOVIES_REQUEST, MOVIES_SUCCESS, MOVIES_ERROR, GENRES_SUCCESS, CHANGE_FILTERS, SET_PAGE, SINGLE_MOVIE } from '../constants'
 import { MoviesActions } from './index'
-import { CallApi } from '../../api/fetchApi'
+import { CallApi } from '../../api/CallApi'
 import { store } from '../store'
 
 export default {
@@ -47,6 +47,21 @@ export default {
             return dispatch({
                 type: GENRES_SUCCESS,
                 payload: genres.genres
+            })
+        }
+    },
+
+    getSingleMovie(id: string) {
+        console.log(id)
+        return async (dispatch: any) => {
+            const movie = await CallApi.get(`/movie/${id}`, {
+                params: {
+                    language: 'ru-RU'
+                }
+            })
+            return dispatch({
+                type: SINGLE_MOVIE,
+                payload: movie
             })
         }
     },
