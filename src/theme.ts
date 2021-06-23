@@ -17,6 +17,28 @@ export const theme = createMuiTheme({
                 flex: 'none',
                 marginRight: '7px'
             }
+        }),
+
+        MuiInputBase: createStyles({
+            root: {
+                fontSize: '0.875rem'
+            }
+        }),
+
+        MuiTypography: createStyles({
+            body1: {
+                fontSize: '0.875rem',
+            }
+        }),
+
+        MuiFormControlLabel: createStyles({
+            root: {
+                fontSize: '0.875rem',
+                marginLeft: '-7px',
+                '& > span:first-child': {
+                    padding: '5px'
+                }
+            }
         })
     }
-});
+})

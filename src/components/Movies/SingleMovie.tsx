@@ -11,6 +11,8 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import { useStyles } from './style'
 
 interface SingleMovieProps {
@@ -36,6 +38,10 @@ export const SingleMovie = ({ params }: SingleMovieProps) => {
 
     return (
         <Fragment>
+            <IconButton className={classes.btnBack} aria-label="back" onClick={goBack}>
+                <ArrowBackIosIcon />
+            </IconButton>
+
             <Card className={classes.singleMovieContainer}>
                 <CardMedia
                     component="img"
@@ -47,16 +53,6 @@ export const SingleMovie = ({ params }: SingleMovieProps) => {
                 />
 
                 <CardContent className={classes.singleMovieContent}>
-                    <Button
-                        size="small"
-                        variant="outlined"
-                        color="primary"
-                        className={classes.btnBack}
-                        onClick={goBack}
-                    >
-                        Назад
-                    </Button>
-
                     <Typography variant="h6" color="textPrimary" className={classes.singleMovieTitle}>
                         {singleMovie.title}
                     </Typography>

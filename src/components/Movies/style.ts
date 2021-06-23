@@ -39,7 +39,9 @@ export const useStyles = makeStyles((theme: Theme) =>
         btnBack: {
             position: 'absolute',
             top: '0',
-            left: '-11px'
+            bottom: '0',
+            left: '0px',
+            margin: 'auto 0',
         }
     })
 )

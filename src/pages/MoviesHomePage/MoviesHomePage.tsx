@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 
 export const MoviesHomePage = () => (
     <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
             <Grid item xs={3} sm={3}>
                 <Typography variant="h5">Фильтры: </Typography>
                 <Filters />
